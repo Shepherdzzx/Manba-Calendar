@@ -60,6 +60,16 @@ func TestParse_Examples(t *testing.T) {
 			input: "明天下午三点提醒我和张三开会",
 			want: ParsedCommand{Intent: IntentCreateEvent, Title: "和张三开会", Date: "2026-05-30", Time: "15:00", NeedReminder: &trueVal},
 		},
+		{
+			name:  "create_event_date_only_today",
+			input: "今天要写作业",
+			want: ParsedCommand{Intent: IntentCreateEvent, Title: "要写作业", Date: "2026-05-29"},
+		},
+		{
+			name:  "create_event_date_only_tomorrow",
+			input: "明天和张三开会",
+			want: ParsedCommand{Intent: IntentCreateEvent, Title: "和张三开会", Date: "2026-05-30"},
+		},
 	}
 
 	for _, tt := range tests {
@@ -93,7 +103,6 @@ func TestParse_Errors(t *testing.T) {
 	}{
 		{name: "empty_input", input: "   ", reason: ErrEmptyInput},
 		{name: "unknown_intent", input: "你好世界", reason: ErrUnknownIntent},
-		{name: "missing_time", input: "添加明天和张三开会", reason: ErrMissingTime},
 		{name: "missing_title_for_delete", input: "删除明天上午的", reason: ErrMissingTitle},
 	}
 

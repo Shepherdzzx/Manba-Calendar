@@ -49,9 +49,9 @@
 - `intent`
 - `title`
 - `date`
-- `time`
 
 可选字段：
+- `time`
 - `need_reminder`
 
 示例：
@@ -63,6 +63,16 @@
   "date": "2026-05-30",
   "time": "15:00",
   "need_reminder": true
+}
+```
+
+仅日期示例：
+
+```json
+{
+  "intent": "create_event",
+  "title": "要写作业",
+  "date": "2026-05-29"
 }
 ```
 
@@ -124,7 +134,7 @@
 
 | intent | `title` | `date` | `time` | `need_reminder` |
 | --- | --- | --- | --- | --- |
-| `create_event` | 必填 | 必填 | 必填 | 可选 |
+| `create_event` | 必填 | 必填 | 可选 | 可选 |
 | `query_events` | 可选 | 可选 | 可选 | 忽略 |
 | `delete_event` | 必填 | 可选 | 可选 | 忽略 |
 
@@ -150,7 +160,7 @@
    - `delete_event`
 3. `date` 是否满足 `YYYY-MM-DD` 格式，且是合法日期
 4. `time` 是否满足 `HH:MM` 格式，且小时在 `00-23`、分钟在 `00-59`
-5. `create_event` 的 `title`、`date`、`time` 是否完整
+5. `create_event` 的 `title`、`date` 是否完整
 6. `delete_event` 的 `title` 是否非空
 7. 未知字段是否需要忽略或记录日志（建议忽略执行，但保留调试信息）
 
