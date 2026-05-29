@@ -43,9 +43,6 @@ func Validate(cmd ParsedCommand) *ParseError {
 		if cmd.Date == "" {
 			return &ParseError{Reason: ErrMissingDate, Message: "create_event requires date"}
 		}
-		if cmd.Time == "" {
-			return &ParseError{Reason: ErrMissingTime, Message: "create_event requires time"}
-		}
 	case IntentDeleteEvent:
 		if cmd.Title == "" {
 			return &ParseError{Reason: ErrMissingTitle, Message: "delete_event requires title"}

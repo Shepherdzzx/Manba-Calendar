@@ -117,7 +117,8 @@ delete_event > create_event > query_events
 校验规则应直接复用 `docs/protocol.md`：
 
 - `intent` 必须属于允许范围
-- `create_event` 必须包含 `title`、`date`、`time`
+- `create_event` 必须包含 `title`、`date`
+- `time` 可选
 - `delete_event` 必须包含 `title`
 - `date` 必须符合 `YYYY-MM-DD`
 - `time` 必须符合 `HH:MM`
@@ -170,7 +171,6 @@ sealed class ParserResult {
 - 输入为空
 - 无法识别 intent
 - 创建事件缺少日期
-- 创建事件缺少时间
 - 删除事件缺少标题
 - 时间表达无法解析
 - 标题为空
