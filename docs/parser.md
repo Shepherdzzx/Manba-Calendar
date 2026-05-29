@@ -108,7 +108,7 @@ delete_event > create_event > query_events
 - `后天上午十点去超市买东西` → `去超市买东西`
 - `取消今晚七点的健身` → `健身`
 
-如果剩余文本为空，则应返回缺失标题错误。
+如果剩余文本为空，或只剩“事”“事情”“安排”等泛化弱标题，则应视为没有有效标题。对于 `delete_event`，如果已经识别到明确 `date`，则可以继续进入按日期删除候选事件的流程。
 
 ### 4. `ParserValidator`
 
@@ -119,7 +119,7 @@ delete_event > create_event > query_events
 - `intent` 必须属于允许范围
 - `create_event` 必须包含 `title`、`date`
 - `time` 可选
-- `delete_event` 必须包含 `title`
+- `delete_event` 必须包含 `title`，或在提供明确 `date` 时允许 `title` 为空
 - `date` 必须符合 `YYYY-MM-DD`
 - `time` 必须符合 `HH:MM`
 
@@ -171,7 +171,7 @@ sealed class ParserResult {
 - 输入为空
 - 无法识别 intent
 - 创建事件缺少日期
-- 删除事件缺少标题
+- 删除事件既没有标题也没有日期
 - 时间表达无法解析
 - 标题为空
 

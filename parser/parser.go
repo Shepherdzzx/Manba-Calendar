@@ -5,6 +5,31 @@ import (
 	"time"
 )
 
+var fallbackCreateActivities = []string{
+	"开会",
+	"看电影",
+	"买东西",
+	"写作业",
+	"打游戏",
+	"复习",
+	"上课",
+	"学习",
+	"考试",
+	"写代码",
+	"工作",
+	"健身",
+	"跑步",
+	"打球",
+	"看书",
+	"看剧",
+	"散步",
+	"吃饭",
+	"写",
+	"去",
+	"见",
+	"买",
+}
+
 type Parser struct {
 	now time.Time
 }
@@ -22,16 +47,18 @@ func (p Parser) Parse(input string) ParseResult {
 	intent := DetectIntent(trimmed)
 	dt := NewDateTimeParser(p.now).Parse(trimmed)
 	if intent == "" {
-		if strings.Contains(trimmed, "开会") || strings.Contains(trimmed, "看电影") || strings.Contains(trimmed, "买东西") {
-			intent = IntentCreateEvent
-		} else if dt.Date != "" || dt.Time != "" {
-			intent = IntentCreateEvent
-		} else {
+		for _, act := range fallbackCreateActivities {
+			if strings.Contains(trimmed, act) {
+				intent = IntentCreateEvent
+				break
+			}
+		}
+		if intent == "" {
 			return ParseResult{Err: &ParseError{Reason: ErrUnknownIntent, Message: "unable to detect intent"}}
 		}
 	}
 
-	title := ExtractTitle(trimmed, dt)
+	title := ExtractTitle(trimmed, intent, dt)
 
 	cmd := ParsedCommand{
 		Intent: intent,
