@@ -36,9 +36,34 @@ func TestParse_Examples(t *testing.T) {
 			want: ParsedCommand{Intent: IntentQueryEvents, Title: "会议", Date: "2026-06-01"},
 		},
 		{
+			name:  "query_next_friday_my_things",
+			input: "下周五我有什么事",
+			want: ParsedCommand{Intent: IntentQueryEvents, Date: "2026-06-05"},
+		},
+		{
+			name:  "query_today_my_arrangements",
+			input: "今天我有什么安排",
+			want: ParsedCommand{Intent: IntentQueryEvents, Date: "2026-05-29"},
+		},
+		{
+			name:  "query_today_my_matters",
+			input: "今天我有什么事情",
+			want: ParsedCommand{Intent: IntentQueryEvents, Date: "2026-05-29"},
+		},
+		{
+			name:  "query_today_specific_meetings",
+			input: "今天我有什么会议",
+			want: ParsedCommand{Intent: IntentQueryEvents, Title: "会议", Date: "2026-05-29"},
+		},
+		{
 			name:  "example5_delete_gym_tonight",
 			input: "取消今晚七点的健身",
 			want: ParsedCommand{Intent: IntentDeleteEvent, Title: "健身", Date: "2026-05-29", Time: "19:00"},
+		},
+		{
+			name:  "delete_event_time_only_tonight_thing",
+			input: "删除今晚七点的事",
+			want: ParsedCommand{Intent: IntentDeleteEvent, Date: "2026-05-29", Time: "19:00"},
 		},
 		{
 			name:  "example6_delete_interview_tomorrow_morning",
@@ -66,9 +91,49 @@ func TestParse_Examples(t *testing.T) {
 			want: ParsedCommand{Intent: IntentCreateEvent, Title: "要写作业", Date: "2026-05-29"},
 		},
 		{
-			name:  "create_event_date_only_tomorrow",
-			input: "明天和张三开会",
-			want: ParsedCommand{Intent: IntentCreateEvent, Title: "和张三开会", Date: "2026-05-30"},
+			name:  "delete_event_date_only_today_thing",
+			input: "删除今天的事",
+			want: ParsedCommand{Intent: IntentDeleteEvent, Date: "2026-05-29"},
+		},
+		{
+			name:  "delete_event_with_colloquial_shandiao_today",
+			input: "删掉今天的事",
+			want: ParsedCommand{Intent: IntentDeleteEvent, Date: "2026-05-29"},
+		},
+		{
+			name:  "delete_event_with_colloquial_shandiao_tomorrow",
+			input: "删掉明天上午的会议",
+			want: ParsedCommand{Intent: IntentDeleteEvent, Title: "会议", Date: "2026-05-30"},
+		},
+		{
+			name:  "create_event_play_game_with_time",
+			input: "下周五五点要打游戏",
+			want: ParsedCommand{Intent: IntentCreateEvent, Title: "要打游戏", Date: "2026-06-05", Time: "05:00"},
+		},
+		{
+			name:  "create_event_play_game_date_only",
+			input: "下周五要打游戏",
+			want: ParsedCommand{Intent: IntentCreateEvent, Title: "要打游戏", Date: "2026-06-05"},
+		},
+		{
+			name:  "create_event_play_game_date_only_with_wo",
+			input: "下周五我要打游戏",
+			want: ParsedCommand{Intent: IntentCreateEvent, Title: "我要打游戏", Date: "2026-06-05"},
+		},
+		{
+			name:  "create_event_review_date_only",
+			input: "明天要复习",
+			want: ParsedCommand{Intent: IntentCreateEvent, Title: "要复习", Date: "2026-05-30"},
+		},
+		{
+			name:  "create_event_class_date_only",
+			input: "后天上课",
+			want: ParsedCommand{Intent: IntentCreateEvent, Title: "上课", Date: "2026-05-31"},
+		},
+		{
+			name:  "create_event_go_gym_weekend",
+			input: "周六去健身",
+			want: ParsedCommand{Intent: IntentCreateEvent, Title: "去健身", Date: "2026-05-30"},
 		},
 	}
 
@@ -103,7 +168,10 @@ func TestParse_Errors(t *testing.T) {
 	}{
 		{name: "empty_input", input: "   ", reason: ErrEmptyInput},
 		{name: "unknown_intent", input: "你好世界", reason: ErrUnknownIntent},
-		{name: "missing_title_for_delete", input: "删除明天上午的", reason: ErrMissingTitle},
+		{name: "missing_title_for_delete", input: "删除", reason: ErrMissingTitle},
+		{name: "date_only_but_unknown_action", input: "明天那个", reason: ErrUnknownIntent},
+		{name: "date_only_but_unknown_action_this", input: "明天这个", reason: ErrUnknownIntent},
+		{name: "date_only_but_unknown_action_next_friday", input: "下周五那个", reason: ErrUnknownIntent},
 	}
 
 	for _, tt := range tests {
