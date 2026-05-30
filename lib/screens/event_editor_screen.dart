@@ -47,7 +47,13 @@ class _EventEditorScreenState extends State<EventEditorScreen> {
     final editing = widget.initialEvent != null;
 
     return Scaffold(
-      appBar: AppBar(title: Text(editing ? '编辑事件' : '新增事件')),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_rounded, size: 30),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(editing ? '编辑事件' : '新增事件'),
+      ),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -64,32 +70,48 @@ class _EventEditorScreenState extends State<EventEditorScreen> {
               },
             ),
             const SizedBox(height: 16),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('日期'),
-              subtitle: Text(
-                '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}',
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.calendar_month_rounded, size: 30),
+                      title: const Text('日期'),
+                      subtitle: Text(
+                        '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}',
+                      ),
+                      trailing: const Icon(Icons.chevron_right_rounded),
+                      onTap: _pickDate,
+                    ),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.schedule_rounded, size: 30),
+                      title: const Text('时间'),
+                      subtitle: Text(
+                        _selectedTime == null ? '全天' : _selectedTime!.format(context),
+                      ),
+                      trailing: const Icon(Icons.chevron_right_rounded),
+                      onTap: _pickTime,
+                    ),
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      secondary: const Icon(Icons.notifications_rounded, size: 30),
+                      value: _needReminder,
+                      onChanged: (value) => setState(() => _needReminder = value),
+                      title: const Text('开启提醒'),
+                    ),
+                  ],
+                ),
               ),
-              trailing: const Icon(Icons.calendar_month_outlined),
-              onTap: _pickDate,
-            ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('时间'),
-              subtitle: Text(
-                _selectedTime == null ? '全天' : _selectedTime!.format(context),
-              ),
-              trailing: const Icon(Icons.schedule_outlined),
-              onTap: _pickTime,
-            ),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              value: _needReminder,
-              onChanged: (value) => setState(() => _needReminder = value),
-              title: const Text('开启提醒'),
             ),
             const SizedBox(height: 24),
             FilledButton(
+              style: FilledButton.styleFrom(
+                minimumSize: const Size.fromHeight(56),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
               onPressed: () {
                 if (!_formKey.currentState!.validate()) {
                   return;
@@ -110,7 +132,13 @@ class _EventEditorScreenState extends State<EventEditorScreen> {
                   ),
                 );
               },
-              child: Text(editing ? '保存修改' : '创建事件'),
+              child: Text(
+                editing ? '保存修改' : '创建事件',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
             ),
             const SizedBox(height: 12),
             Text(
