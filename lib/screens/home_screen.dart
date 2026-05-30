@@ -5,6 +5,7 @@ import '../models/calendar_event.dart';
 import '../providers/event_state.dart';
 import '../providers/voice_state.dart';
 import '../utils/date_formatters.dart';
+import '../utils/parsed_command_mapper.dart';
 import '../widgets/calendar_panel.dart';
 import '../widgets/event_card.dart';
 import '../widgets/voice_widgets.dart';
@@ -130,10 +131,15 @@ class _HomeScaffold extends StatelessWidget {
               transcript: voiceState.transcript!,
               command: voiceState.command!,
               onConfirm: () {
+                final parsedDate = parsedDateFromCommand(voiceState.command!);
+                final parsedTime = parsedTimeFromCommand(voiceState.command!);
                 eventState.addEvent(
                   title: voiceState.command!.title ?? '新的安排',
-                  date: DateTime.now().add(const Duration(days: 1)),
-                  time: const TimeOfDayValue(hour: 15, minute: 0),
+                  date:
+                      parsedDate ?? DateTime.now().add(const Duration(days: 1)),
+                  time:
+                      parsedTime ??
+                      const TimeOfDayValue(hour: 15, minute: 0),
                   needReminder: voiceState.command!.needReminder ?? false,
                 );
                 voiceState.reset();

@@ -101,8 +101,8 @@ class VoiceResultCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text('Intent: ${command.intent}'),
             if (command.title != null) Text('标题: ${command.title}'),
-            if (command.dateLabel != null) Text('日期: ${command.dateLabel}'),
-            if (command.timeLabel != null) Text('时间: ${command.timeLabel}'),
+            if (command.date != null) Text('日期: ${command.date}'),
+            if (command.time != null) Text('时间: ${command.time}'),
             if (command.needReminder != null)
               Text('提醒: ${command.needReminder! ? '开启' : '关闭'}'),
             const SizedBox(height: 20),

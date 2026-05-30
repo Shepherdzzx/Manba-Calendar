@@ -3,19 +3,22 @@ import 'package:manba_alert/models/parsed_command.dart';
 import 'package:manba_alert/providers/voice_state.dart';
 import 'package:manba_alert/services/voice_service.dart';
 
-class _FakeVoiceService extends VoiceService {
+class _FakeVoiceParserService implements VoiceParserService {
   @override
-  Future<VoiceStubResult> parseAfterRelease() async {
-    return const VoiceStubResult(
+  Future<VoiceParseResult> parseAfterRelease() async {
+    return const VoiceParseResult(
       transcript: '帮我看看今天还有什么安排',
-      command: ParsedCommand(intent: 'query_events', dateLabel: '今天'),
+      command: ParsedCommand(
+        intent: ParsedCommand.intentQueryEvents,
+        date: '2026-05-30',
+      ),
     );
   }
 }
 
 void main() {
   test('voice state transitions from recording to ready', () async {
-    final state = VoiceState(service: _FakeVoiceService());
+    final state = VoiceState(service: _FakeVoiceParserService());
 
     state.startRecording();
     expect(state.status, VoiceStatus.recording);
@@ -24,6 +27,6 @@ void main() {
 
     expect(state.status, VoiceStatus.ready);
     expect(state.transcript, '帮我看看今天还有什么安排');
-    expect(state.command?.intent, 'query_events');
+    expect(state.command?.intent, ParsedCommand.intentQueryEvents);
   });
 }
