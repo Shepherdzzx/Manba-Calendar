@@ -18,11 +18,16 @@ class ThemeSelectorCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: themes.map((theme) {
             final selected = theme.id == currentThemeId;
             return ListTile(
+              visualDensity: VisualDensity.compact,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 4,
+                vertical: 2,
+              ),
               onTap: () => onThemeSelected(theme.id),
               leading: Icon(
                 selected ? Icons.radio_button_checked : Icons.radio_button_off,
@@ -31,11 +36,11 @@ class ThemeSelectorCard extends StatelessWidget {
                 children: [
                   Expanded(child: Text(theme.label)),
                   _ColorDot(color: theme.primary),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 4),
                   _ColorDot(color: theme.secondary),
                   if (selected) ...[
-                    const SizedBox(width: 8),
-                    const Icon(Icons.check_circle, size: 18),
+                    const SizedBox(width: 4),
+                    const Icon(Icons.check_circle, size: 16),
                   ],
                 ],
               ),
@@ -55,8 +60,8 @@ class _ColorDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 18,
-      height: 18,
+      width: 14,
+      height: 14,
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
     );
   }
