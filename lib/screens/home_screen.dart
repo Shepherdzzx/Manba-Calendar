@@ -217,18 +217,44 @@ class _HomeScaffold extends StatelessWidget {
     EventState state,
     CalendarEvent event,
   ) async {
+    final theme = Theme.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: const Text('确认删除'),
-          content: Text('确定删除“${event.title}”吗？这是一个软删除操作。'),
+          icon: Icon(
+            Icons.delete_outline_rounded,
+            color: theme.colorScheme.error,
+            size: 36,
+          ),
+          title: Text(
+            '确认删除',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          content: Text('确定要删除“${event.title}”吗？删除后该事件将不再显示。'),
           actions: [
-            TextButton(
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                minimumSize: const Size(88, 48),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 12,
+                ),
+              ),
               onPressed: () => Navigator.of(dialogContext).pop(false),
               child: const Text('取消'),
             ),
             FilledButton(
+              style: FilledButton.styleFrom(
+                minimumSize: const Size(88, 48),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 12,
+                ),
+                backgroundColor: theme.colorScheme.error,
+              ),
               onPressed: () => Navigator.of(dialogContext).pop(true),
               child: const Text('删除'),
             ),
