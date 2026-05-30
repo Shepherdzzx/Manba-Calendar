@@ -39,6 +39,10 @@ android {
     }
 }
 
+dependencies {
+    implementation(files("libs/bridge.aar"))
+}
+
 flutter {
     source = "../.."
 }
