@@ -1,0 +1,1 @@
+An empty-state illustration for a daily calendar view. Show a clean calendar page with a single highlighted date, a small pencil or plus sign nearby, and soft purple-and-gold decorative elements. The mood should feel encouraging and tidy, suggesting that the user can quickly add their first schedule item without pressure.
