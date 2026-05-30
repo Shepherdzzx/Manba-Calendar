@@ -23,12 +23,13 @@ class CalendarPanel extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: TableCalendar<Object>(
+          availableGestures: AvailableGestures.horizontalSwipe,
           firstDay: DateTime.utc(2020, 1, 1),
           lastDay: DateTime.utc(2035, 12, 31),
           focusedDay: state.focusedMonth,
           selectedDayPredicate: (day) => isSameDay(day, state.selectedDate),
           availableCalendarFormats: const {CalendarFormat.month: 'Month'},
-          daysOfWeekHeight: 24,
+          daysOfWeekHeight: 34,
           daysOfWeekStyle: const DaysOfWeekStyle(
             weekdayStyle: TextStyle(fontSize: 12),
             weekendStyle: TextStyle(fontSize: 12),

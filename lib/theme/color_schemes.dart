@@ -45,8 +45,48 @@ const coralNightTheme = AppThemeOption(
   surfaceTint: Color(0xFFFFF4F2),
 );
 
+const skyMintTheme = AppThemeOption(
+  id: 'sky_mint',
+  label: '天青薄荷',
+  seedColor: Color(0xFF4C8DAE),
+  primary: Color(0xFF3B7493),
+  secondary: Color(0xFF86D5C2),
+  surfaceTint: Color(0xFFF2FBFD),
+);
+
+const roseSandTheme = AppThemeOption(
+  id: 'rose_sand',
+  label: '玫砂',
+  seedColor: Color(0xFFB05A72),
+  primary: Color(0xFF96485E),
+  secondary: Color(0xFFE7C8A0),
+  surfaceTint: Color(0xFFFFF5F6),
+);
+
+const forestAmberTheme = AppThemeOption(
+  id: 'forest_amber',
+  label: '森琥珀',
+  seedColor: Color(0xFF3F6C4E),
+  primary: Color(0xFF335A40),
+  secondary: Color(0xFFD7A441),
+  surfaceTint: Color(0xFFF5FAF6),
+);
+
+const duskLavenderTheme = AppThemeOption(
+  id: 'dusk_lavender',
+  label: '暮薰衣',
+  seedColor: Color(0xFF6E5EA8),
+  primary: Color(0xFF5A4D90),
+  secondary: Color(0xFFC9A8E5),
+  surfaceTint: Color(0xFFF7F3FC),
+);
+
 const themeOptions = <AppThemeOption>[
   purpleGoldTheme,
   tealCreamTheme,
   coralNightTheme,
+  skyMintTheme,
+  roseSandTheme,
+  forestAmberTheme,
+  duskLavenderTheme,
 ];

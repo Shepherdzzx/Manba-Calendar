@@ -32,38 +32,45 @@ class _HomeScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final eventState = context.watch<EventState>();
-    final voiceState = context.watch<VoiceState>();
     final theme = Theme.of(context);
+    final voiceState = context.watch<VoiceState>();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Manba Alert'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const SettingsScreen()));
-            },
-            icon: const Icon(Icons.palette_outlined),
-          ),
-        ],
+        toolbarHeight: 72,
+        automaticallyImplyLeading: false,
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            const SizedBox(width: 48),
+            Expanded(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 18),
+                  child: SizedBox(
+                    height: 250,
+                    child: Image.asset(
+                      'assets/images/manba_calendar_logo.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => const SettingsScreen()));
+              },
+              icon: const Icon(Icons.palette_outlined, size: 40),
+            ),
+          ],
+        ),
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
         children: [
-          Text(
-            '语音日历助手',
-            style: theme.textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '首页即日历，点击日期可查看事件；长按按钮说话，松开后展示解析结果。',
-            style: theme.textTheme.bodyLarge,
-          ),
-          const SizedBox(height: 16),
           CalendarPanel(
             state: eventState,
             onSelect: eventState.selectDate,
@@ -210,18 +217,44 @@ class _HomeScaffold extends StatelessWidget {
     EventState state,
     CalendarEvent event,
   ) async {
+    final theme = Theme.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: const Text('确认删除'),
-          content: Text('确定删除“${event.title}”吗？这是一个软删除操作。'),
+          icon: Icon(
+            Icons.delete_outline_rounded,
+            color: theme.colorScheme.error,
+            size: 36,
+          ),
+          title: Text(
+            '确认删除',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          content: Text('确定要删除“${event.title}”吗？删除后该事件将不再显示。'),
           actions: [
-            TextButton(
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                minimumSize: const Size(88, 48),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 12,
+                ),
+              ),
               onPressed: () => Navigator.of(dialogContext).pop(false),
               child: const Text('取消'),
             ),
             FilledButton(
+              style: FilledButton.styleFrom(
+                minimumSize: const Size(88, 48),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 12,
+                ),
+                backgroundColor: theme.colorScheme.error,
+              ),
               onPressed: () => Navigator.of(dialogContext).pop(true),
               child: const Text('删除'),
             ),
