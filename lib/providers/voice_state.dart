@@ -6,9 +6,10 @@ import '../services/voice_service.dart';
 enum VoiceStatus { idle, recording, processing, ready }
 
 class VoiceState extends ChangeNotifier {
-  VoiceState({VoiceService? service}) : _service = service ?? VoiceService();
+  VoiceState({VoiceParserService? service})
+    : _service = service ?? VoiceStubService();
 
-  final VoiceService _service;
+  final VoiceParserService _service;
   VoiceStatus _status = VoiceStatus.idle;
   String? _transcript;
   ParsedCommand? _command;
