@@ -32,12 +32,27 @@ class _HomeScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final eventState = context.watch<EventState>();
-    final voiceState = context.watch<VoiceState>();
     final theme = Theme.of(context);
+    final voiceState = context.watch<VoiceState>();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Manba Alert'),
+        toolbarHeight: 72,
+        titleSpacing: 0,
+        title: Transform.translate(
+          offset: const Offset(0, 0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: SizedBox(
+              height: 250,
+              child: Image.asset(
+                'assets/images/manba_calendar_logo.png',
+                fit: BoxFit.contain,
+                alignment: Alignment.centerLeft,
+              ),
+            ),
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -45,25 +60,13 @@ class _HomeScaffold extends StatelessWidget {
                 context,
               ).push(MaterialPageRoute(builder: (_) => const SettingsScreen()));
             },
-            icon: const Icon(Icons.palette_outlined),
+            icon: const Icon(Icons.palette_outlined, size: 40),
           ),
         ],
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
         children: [
-          Text(
-            '语音日历助手',
-            style: theme.textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '首页即日历，点击日期可查看事件；长按按钮说话，松开后展示解析结果。',
-            style: theme.textTheme.bodyLarge,
-          ),
-          const SizedBox(height: 16),
           CalendarPanel(
             state: eventState,
             onSelect: eventState.selectDate,

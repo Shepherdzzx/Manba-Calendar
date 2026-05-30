@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../models/calendar_event.dart';
 
 const _weekdayLabels = <int, String>{

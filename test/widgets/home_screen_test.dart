@@ -29,9 +29,9 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    expect(find.text('语音日历助手'), findsOneWidget);
     expect(find.byType(GestureDetector), findsWidgets);
-    expect(find.textContaining('的安排'), findsOneWidget);
+    expect(find.byType(FloatingActionButton), findsOneWidget);
     expect(find.text('新增事件'), findsOneWidget);
+    expect(find.byIcon(Icons.palette_outlined), findsOneWidget);
   });
 }

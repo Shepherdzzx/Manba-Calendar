@@ -28,7 +28,7 @@ class CalendarPanel extends StatelessWidget {
           focusedDay: state.focusedMonth,
           selectedDayPredicate: (day) => isSameDay(day, state.selectedDate),
           availableCalendarFormats: const {CalendarFormat.month: 'Month'},
-          daysOfWeekHeight: 24,
+          daysOfWeekHeight: 34,
           daysOfWeekStyle: const DaysOfWeekStyle(
             weekdayStyle: TextStyle(fontSize: 12),
             weekendStyle: TextStyle(fontSize: 12),
