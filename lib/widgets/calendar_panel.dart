@@ -29,7 +29,7 @@ class CalendarPanel extends StatelessWidget {
           focusedDay: state.focusedMonth,
           selectedDayPredicate: (day) => isSameDay(day, state.selectedDate),
           availableCalendarFormats: const {CalendarFormat.month: 'Month'},
-          daysOfWeekHeight: 34,
+          daysOfWeekHeight: 16,
           daysOfWeekStyle: const DaysOfWeekStyle(
             weekdayStyle: TextStyle(fontSize: 12),
             weekendStyle: TextStyle(fontSize: 12),
@@ -40,10 +40,13 @@ class CalendarPanel extends StatelessWidget {
               return Center(child: Text(labels[day.weekday - 1]));
             },
             headerTitleBuilder: (context, day) {
-              return Text(
-                '${day.year}年${day.month}月',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
+              return Center(
+                child: Text(
+                  '${day.year}年${day.month}月',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               );
             },
