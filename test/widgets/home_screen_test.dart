@@ -4,6 +4,7 @@ import 'package:manba_alert/screens/home_screen.dart';
 import 'package:manba_alert/services/settings_service.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class _FakeSettingsService extends SettingsService {
   @override
@@ -33,5 +34,32 @@ void main() {
     expect(find.byType(FloatingActionButton), findsOneWidget);
     expect(find.text('新增事件'), findsOneWidget);
     expect(find.byIcon(Icons.palette_outlined), findsOneWidget);
+  });
+
+  testWidgets('calendar supports horizontal swipe to change month', (
+    tester,
+  ) async {
+    final appState = AppState(
+      settingsService: _FakeSettingsService(),
+      initialThemeId: null,
+    );
+
+    await tester.pumpWidget(
+      ChangeNotifierProvider.value(
+        value: appState,
+        child: MaterialApp(home: const HomeScreen()),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    final initialMonthFinder = find.textContaining('年');
+    final initialMonthText = tester.widget<Text>(initialMonthFinder.first).data;
+
+    await tester.drag(find.byType(TableCalendar<Object>), const Offset(-400, 0));
+    await tester.pumpAndSettle();
+
+    final nextMonthText = tester.widget<Text>(initialMonthFinder.first).data;
+    expect(nextMonthText, isNot(initialMonthText));
   });
 }

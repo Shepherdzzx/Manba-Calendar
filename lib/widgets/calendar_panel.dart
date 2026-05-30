@@ -23,6 +23,7 @@ class CalendarPanel extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: TableCalendar<Object>(
+          availableGestures: AvailableGestures.horizontalSwipe,
           firstDay: DateTime.utc(2020, 1, 1),
           lastDay: DateTime.utc(2035, 12, 31),
           focusedDay: state.focusedMonth,
