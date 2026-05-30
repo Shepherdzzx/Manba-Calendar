@@ -38,31 +38,35 @@ class _HomeScaffold extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 72,
+        automaticallyImplyLeading: false,
         titleSpacing: 0,
-        title: Transform.translate(
-          offset: const Offset(0, 0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: SizedBox(
-              height: 250,
-              child: Image.asset(
-                'assets/images/manba_calendar_logo.png',
-                fit: BoxFit.contain,
-                alignment: Alignment.centerLeft,
+        title: Row(
+          children: [
+            const SizedBox(width: 48),
+            Expanded(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 18),
+                  child: SizedBox(
+                    height: 250,
+                    child: Image.asset(
+                      'assets/images/manba_calendar_logo.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+            IconButton(
+              onPressed: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => const SettingsScreen()));
+              },
+              icon: const Icon(Icons.palette_outlined, size: 40),
+            ),
+          ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const SettingsScreen()));
-            },
-            icon: const Icon(Icons.palette_outlined, size: 40),
-          ),
-        ],
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
