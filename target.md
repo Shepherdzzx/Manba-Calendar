@@ -1,5 +1,7 @@
 # 任务
 
+当前应用品牌名称定为 **Manba Calendar**，中文名为 **曼吧日历**。
+
 **题目一：语音版的日历工具**请开发一个语音日历工具，帮助用户提高日历管理的效率和便捷性。
 
 要求：请了解用户在日历管理中的真实需求，设计并实现一个以语音交互为核心的日历管理工具，能准确、顺畅地实现通过语音添加/删除/查看事件提醒等能力。
@@ -98,6 +100,10 @@
 
 ## 已完成
 
+0. **应用品牌升级已完成**
+   - 已将应用名称统一更新为 `Manba Calendar`，中文名为 `曼吧日历`。
+   - 已同步替换 Android / iOS / macOS 端应用图标资源与显示名称。
+
 1. **JSON 协议规范已完成**
    - 已补充 `docs/protocol.md`，明确 `create_event` / `query_events` / `delete_event` 三类 intent 的字段约束、时间格式和应用侧校验规则。
 
@@ -120,13 +126,19 @@
    - 已支持首页日历左右滑动切换月份，并持续优化星期栏间距与年月标题居中等视觉细节。
    - 已补充基础 Provider / Widget 测试。
 
+6. **Android 原生 parser bridge 最小链路已完成验证**
+   - 已新增 Go bridge 包，并通过 gomobile 生成 Android AAR。
+   - 已在 Android 原生侧通过 `MethodChannel` 暴露 `parseText`。
+   - 已在 Flutter 侧新增 `NativeParser`，并接入当前固定 transcript 验证路径。
+   - 已完成 APK 构建与 Android 真机运行验证：长按语音入口后可显示解析卡片，确认后可成功创建事件。
+
 ## 待完成
 
 1. **真实麦克风录音与 ASR 接入**
-   - 当前语音链路仍为 stub，需要接入真实录音与语音转文字能力。
+   - 当前语音链路仍为固定 transcript / stub 验证路径，下一步计划接入 Moonshine 完成真实录音与语音转文字。
 
 2. **Flutter 对接真实解析器输出**
-   - 当前 Flutter 端只展示模拟解析结果，后续需要替换为真实解析器返回的结构化数据。
+   - 当前 Flutter 端已完成固定 transcript 到结构化结果的桥接验证，后续需要替换为真实 ASR 返回的 transcript。
 
 3. **事件持久化**
    - 当前 Flutter 侧事件数据仍以内存状态为主，后续需要接入本地持久化方案。

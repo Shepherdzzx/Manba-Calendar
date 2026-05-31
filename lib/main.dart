@@ -12,5 +12,5 @@ Future<void> main() async {
     settingsService: settingsService,
     initialThemeId: initialThemeId,
   );
-  runApp(ManbaAlertApp(appState: appState));
+  runApp(ManbaCalendarApp(appState: appState));
 }
