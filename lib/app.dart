@@ -5,8 +5,8 @@ import 'providers/app_state.dart';
 import 'screens/home_screen.dart';
 import 'theme/app_themes.dart';
 
-class ManbaAlertApp extends StatelessWidget {
-  const ManbaAlertApp({super.key, required this.appState});
+class ManbaCalendarApp extends StatelessWidget {
+  const ManbaCalendarApp({super.key, required this.appState});
 
   final AppState appState;
 
@@ -17,7 +17,7 @@ class ManbaAlertApp extends StatelessWidget {
       child: Consumer<AppState>(
         builder: (context, state, _) {
           return MaterialApp(
-            title: 'Manba Alert',
+            title: 'Manba Calendar',
             debugShowCheckedModeBanner: false,
             theme: buildTheme(state.currentTheme),
             home: const HomeScreen(),
